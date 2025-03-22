@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.herlyn.curso.reservas.model.dto.UserDtoDetail;
 
@@ -23,15 +24,16 @@ public class UserController {
     }
 
     @GetMapping("/listmap")
-    public String listmap(ModelMap model){
-        
-        UserDtoDetail userdto= new UserDtoDetail("Erlin", "Castillo");
-        UserDtoDetail userdto2= new UserDtoDetail("Elkin", "Castillo");
-        UserDtoDetail userdto3= new UserDtoDetail("Elver", "Castillo"); 
-        List<UserDtoDetail> users = Arrays.asList(userdto,userdto2,userdto3);
-        model.addAttribute("users",users);
+    public String listmap(ModelMap model){       
         model.addAttribute("title","Listado de usuarios");
         return "list";
+    }
+
+    @ModelAttribute("users")
+    public List<UserDtoDetail> userModel(){
+        return Arrays.asList(new UserDtoDetail("Erlin", "Castillo"),
+                             new UserDtoDetail("Elkin", "Castillo"),
+                             new UserDtoDetail("Elver", "Castillo") );
     }
 
 }
