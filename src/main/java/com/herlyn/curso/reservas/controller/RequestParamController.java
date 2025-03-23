@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.herlyn.curso.reservas.model.dto.UserDtoDetail;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api/params") // Se usa para establecer una ruta previa
 public class RequestParamController {
@@ -21,4 +23,12 @@ public class RequestParamController {
         //UserDtoDetail bar = new UserDtoDetail(name, lastname);
         return new UserDtoDetail(name,lastname);
     }
+    @GetMapping("/request")
+    public UserDtoDetail getMethodName(HttpServletRequest request) {
+        UserDtoDetail param= new UserDtoDetail();
+        param.setName(request.getParameter("name"));
+        param.setLastname(request.getParameter("lastname"));
+        return param;
+    }
+    
 }
