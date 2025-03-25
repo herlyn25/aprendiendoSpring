@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 
 @RestController
 @RequestMapping("/api/path")
@@ -32,8 +28,11 @@ public class PathVariableController {
     @Value("${config.message}")
     private String message;
     
-    @Value("${config.colores}")
-    private List colores;
+    @Value("#{'${config.colores}'.toUpperCase()}")
+    private List<String> colores;
+
+    @Value("#{${config.valueMap}}")
+    private Map<String, Object> valueMap;
 
     @GetMapping("/user/{name}/{lastname}")
     public UserDtoDetail getMethodName(@PathVariable String name, @PathVariable String lastname) {
@@ -41,8 +40,7 @@ public class PathVariableController {
     }
     
     @PostMapping("/create")
-    public UserDtoDetail postMethodName(@RequestBody UserDtoDetail entity) {
-        //TODO: process POST request        
+    public UserDtoDetail postMethodName(@RequestBody UserDtoDetail entity) {               
         return entity;
     }
 
@@ -53,6 +51,7 @@ public class PathVariableController {
         values_map.put("username", username);
         values_map.put("message", message);
         values_map.put("colores", colores);
+        values_map.put("valuesMap", valueMap);
         return values_map;
     }
     
